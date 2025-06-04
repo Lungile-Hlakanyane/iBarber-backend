@@ -1,0 +1,65 @@
+package com.ibarber.ibarber_backend.controller;
+import com.ibarber.ibarber_backend.Service.SlotService;
+import com.ibarber.ibarber_backend.dto.SlotsDTO;
+import com.ibarber.ibarber_backend.entity.Slot;
+import com.ibarber.ibarber_backend.entity.User;
+import com.ibarber.ibarber_backend.repository.SlotsRepository;
+import com.ibarber.ibarber_backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/slots")
+public class SlotController {
+    @Autowired
+    private SlotsRepository slotsRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private SlotService slotService;
+    @PostMapping("/create")
+    public Slot createSlot(@RequestBody SlotsDTO slotsDTO){
+        return slotService.createSlot(slotsDTO);
+    }
+    @GetMapping("/unbooked")
+    public ResponseEntity<List<SlotsDTO>> getUnbookedSlots() {
+        return ResponseEntity.ok(slotService.getUnBookedSlots());
+    }
+    @GetMapping("/unbooked/barber/{barberId}")
+    public ResponseEntity<List<SlotsDTO>> getUnbookedSlotsByBarber(@PathVariable Long barberId) {
+        return ResponseEntity.ok(slotService.getUnBookedSlotsByBarberId(barberId));
+    }
+    @GetMapping("/barber-id")
+    public ResponseEntity<Long> getBarberIdByEmail(@RequestParam String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent() && "barber".equalsIgnoreCase(user.get().getRole())) {
+            return ResponseEntity.ok(user.get().getId()); // Assuming ID is barberId
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/barber/{barberId}")
+    public List<SlotsDTO> getSlotsByBarberId(@PathVariable Long barberId) {
+        return slotService.getSlotsByBarberId(barberId);
+    }
+
+    @PutMapping("/book/{slotId}")
+    public ResponseEntity<Slot> bookSlot(@PathVariable Long slotId, @RequestParam Long clientId) {
+        try {
+            Slot bookedSlot = slotService.bookSlot(slotId, clientId);
+            return ResponseEntity.ok(bookedSlot);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/client/{clientId}")
+    public List<Slot> getSlotsByClientId(@PathVariable Long clientId) {
+        return slotsRepository.findByClientId(clientId);
+    }
+}
