@@ -75,5 +75,24 @@ public class SlotServiceImp implements SlotService {
         return slotRepository.save(slot);
     }
 
+    @Override
+    public Slot approveAppointment(Long slotId) {
+        Slot slot = slotRepository.findById(slotId)
+                .orElseThrow(() -> new RuntimeException("Slot not found"));
+        slot.setApproveAppointment(true);
+        return slotRepository.save(slot);
+    }
+
+    @Override
+    public List<SlotsDTO> getBookedSlotsByBarber(Long barberId) {
+        List<Slot> slots = slotRepository.findByBookedTrueAndBarberId(barberId);
+        return slots.stream().map(slotMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public long countBookedSlots() {
+        return slotRepository.countByBooked(true);
+    }
+
 
 }

@@ -3,6 +3,7 @@ import com.ibarber.ibarber_backend.Service.SlotService;
 import com.ibarber.ibarber_backend.dto.SlotsDTO;
 import com.ibarber.ibarber_backend.entity.Slot;
 import com.ibarber.ibarber_backend.entity.User;
+import com.ibarber.ibarber_backend.mapper.SlotMapper;
 import com.ibarber.ibarber_backend.repository.SlotsRepository;
 import com.ibarber.ibarber_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/slots")
 public class SlotController {
+    @Autowired
+    private SlotMapper slotMapper;
     @Autowired
     private SlotsRepository slotsRepository;
     @Autowired
@@ -62,4 +65,21 @@ public class SlotController {
     public List<Slot> getSlotsByClientId(@PathVariable Long clientId) {
         return slotsRepository.findByClientId(clientId);
     }
+    @PostMapping("/{id}/approve")
+    public ResponseEntity<SlotsDTO> approveSlot(@PathVariable Long id) {
+        Slot approvedSlot = slotService.approveAppointment(id);
+        return ResponseEntity.ok(slotMapper.toDto(approvedSlot));
+    }
+
+    @GetMapping("/slots/booked/barber/{barberId}")
+    public List<SlotsDTO> getBookedSlotsByBarber(@PathVariable Long barberId) {
+        return slotService.getBookedSlotsByBarber(barberId);
+    }
+
+    @GetMapping("/count/booked")
+    public ResponseEntity<Long> countBookedSlots() {
+        long totalBooked = slotService.countBookedSlots();
+        return ResponseEntity.ok(totalBooked);
+    }
+
 }

@@ -17,11 +17,25 @@ public class User {
     private String role;
     private String otp;
     private boolean verified = false;
+    private boolean banned;
+    private boolean active = true;
+    public boolean isActive() {
+        return active;
+    }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -73,5 +87,4 @@ public class User {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
-
 }

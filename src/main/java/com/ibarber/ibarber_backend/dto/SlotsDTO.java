@@ -9,6 +9,16 @@ public class SlotsDTO {
     private LocalDate date;
     private Long barberId;
     private Long clientId;
+
+    private boolean approveAppointment;
+
+    public boolean isApproveAppointment() {
+        return approveAppointment;
+    }
+
+    public void setApproveAppointment(boolean approveAppointment) {
+        this.approveAppointment = approveAppointment;
+    }
     public Long getClientId() {
         return clientId;
     }

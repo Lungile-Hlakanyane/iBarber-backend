@@ -11,4 +11,6 @@ public interface UserService {
     public List<UserDTO> getAllUsers();
     boolean deleteUserById(Long id);
     List<UserDTO> getAllBarbers();
+
+    long countUsers();
 }

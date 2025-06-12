@@ -16,6 +16,16 @@ public class Slot {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+    private Boolean approveAppointment = false;
+
+    public Boolean getApproveAppointment() {
+        return approveAppointment;
+    }
+
+    public void setApproveAppointment(Boolean approveAppointment) {
+        this.approveAppointment = approveAppointment;
+    }
+
     public User getClient() {
         return client;
     }

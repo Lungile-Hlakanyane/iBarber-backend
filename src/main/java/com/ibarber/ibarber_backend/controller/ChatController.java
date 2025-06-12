@@ -22,4 +22,5 @@ public class ChatController {
         return chatService.getChatHistory(senderId, receiverId);
     }
 
+
 }

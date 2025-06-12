@@ -46,7 +46,18 @@ public class SecurityConfig {
                                 "/api/likes",
                                 "/api/likes/**",
                                 "/api/chats",
-                                "/api/chats/**"
+                                "/api/chats/**",
+                                "/ws/**",
+                                "/api/portfolios",
+                                "/api/portfolios/**",
+                                "/api/portfolios/upload",
+                                "/uploads/**",
+                                "/portfolio-images",
+                                "/portfolio-images/**",
+                                "/api/announcements",
+                                "/api/announcements/**",
+                                "/api/report-user",
+                                "/api/report-user/**"
                         )
                         .permitAll()
                         .anyRequest().authenticated()

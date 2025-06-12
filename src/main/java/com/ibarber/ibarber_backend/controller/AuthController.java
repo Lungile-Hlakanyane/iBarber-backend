@@ -28,11 +28,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest) {
         Optional<User> optionalUser = userRepository.findByEmail(loginRequest.getEmail());
+
         if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
         }
 
         User user = optionalUser.get();
+
+        if (user.isBanned()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "You cannot log in. Your account has been banned for 30 days."));
+        }
+
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
         }
@@ -42,6 +49,7 @@ public class AuthController {
         response.put("email", user.getEmail());
         response.put("role", user.getRole());
         response.put("username", user.getUsername());
+
         return ResponseEntity.ok(response);
     }
 }

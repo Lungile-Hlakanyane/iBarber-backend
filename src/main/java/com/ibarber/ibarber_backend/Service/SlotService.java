@@ -9,4 +9,7 @@ public interface SlotService {
     List<SlotsDTO> getUnBookedSlotsByBarberId(Long barberId);
     List<SlotsDTO> getSlotsByBarberId(Long barberId);
     public Slot bookSlot(Long slotId, Long clientId);
+    Slot approveAppointment(Long slotId);
+    List<SlotsDTO> getBookedSlotsByBarber(Long barberId);
+    long countBookedSlots();
 }

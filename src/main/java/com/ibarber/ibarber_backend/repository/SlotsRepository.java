@@ -9,4 +9,6 @@ public interface SlotsRepository extends JpaRepository<Slot, Long> {
     List<Slot> findByBookedFalseAndBarber_Id(Long barberId);
     List<Slot> findByBarberId(Long barberId);
     List<Slot> findByClientId(Long clientId);
+    List<Slot> findByBookedTrueAndBarberId(Long barberId);
+    long countByBooked(boolean booked);
 }

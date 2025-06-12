@@ -100,4 +100,9 @@ public class UserServiceImp implements UserService {
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public long countUsers() {
+        return userRepository.count();
+    }
 }

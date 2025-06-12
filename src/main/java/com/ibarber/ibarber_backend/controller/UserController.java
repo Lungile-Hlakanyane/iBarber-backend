@@ -77,4 +77,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countUsers() {
+        long userCount = userService.countUsers();
+        return ResponseEntity.ok(userCount);
+    }
+
+
 }
