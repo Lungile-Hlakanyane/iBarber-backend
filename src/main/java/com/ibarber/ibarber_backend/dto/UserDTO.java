@@ -10,6 +10,25 @@ public class UserDTO {
     private boolean active = true;
     private String role;
     private boolean verified = false;
+    private String profileImage;
+
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public Long getId() {
         return id;
     }

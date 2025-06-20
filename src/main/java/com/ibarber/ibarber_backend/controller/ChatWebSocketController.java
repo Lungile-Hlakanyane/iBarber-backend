@@ -14,11 +14,7 @@ public class ChatWebSocketController {
     private SimpMessagingTemplate messagingTemplate;
     @MessageMapping("/chat.send")
     public void sendMessage(ChatMessageDTO chatMessage) {
-
-        // Save message to DB
         ChatMessageDTO savedMessage = chatService.sendMessage(chatMessage);
-
-        // Then broadcast to the receiver
         messagingTemplate.convertAndSend("/topic/messages/" + chatMessage.getReceiverId(), chatMessage);
     }
 

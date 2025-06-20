@@ -13,7 +13,6 @@ public class ReportUser {
     private String reason;
     private String status;
     private LocalDateTime timestamp;
-
     @PrePersist
     protected void onCreate() {
         this.timestamp = LocalDateTime.now();

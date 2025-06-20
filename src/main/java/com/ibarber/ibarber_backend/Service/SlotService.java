@@ -12,4 +12,7 @@ public interface SlotService {
     Slot approveAppointment(Long slotId);
     List<SlotsDTO> getBookedSlotsByBarber(Long barberId);
     long countBookedSlots();
+    Long countBookingsByClientId(Long clientId);
+    Slot findLatestSlotByClientId(Long clientId);
+    Slot getLastSlotByClientId(Long clientId);
 }

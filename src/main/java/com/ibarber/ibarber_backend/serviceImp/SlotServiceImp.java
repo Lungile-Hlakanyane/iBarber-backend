@@ -7,7 +7,9 @@ import com.ibarber.ibarber_backend.mapper.SlotMapper;
 import com.ibarber.ibarber_backend.repository.SlotsRepository;
 import com.ibarber.ibarber_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +95,17 @@ public class SlotServiceImp implements SlotService {
     public long countBookedSlots() {
         return slotRepository.countByBooked(true);
     }
-
-
+    @Override
+    public Long countBookingsByClientId(Long clientId) {
+        return slotRepository.countByClient_Id(clientId);
+    }
+    @Override
+    public Slot findLatestSlotByClientId(Long clientId) {
+        List<Slot> slots = slotRepository.findTopByClientIdOrderByDateDesc((Pageable) PageRequest.of(0, 1));
+        return slots.isEmpty() ? null : slots.get(0);
+    }
+    @Override
+    public Slot getLastSlotByClientId(Long clientId) {
+        return slotRepository.findLatestSlotByClientId(clientId);
+    }
 }

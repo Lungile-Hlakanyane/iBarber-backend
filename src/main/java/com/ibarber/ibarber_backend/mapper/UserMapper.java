@@ -14,6 +14,7 @@ public class UserMapper {
         user.setBanned(dto.isBanned());
         user.setOtp(otp);
         user.setVerified(false);
+        user.setPhoneNumber(dto.getPhoneNumber());
         return user;
     }
 
@@ -25,6 +26,16 @@ public class UserMapper {
         dto.setUsername(user.getUsername());
         dto.setRole(user.getRole());
         dto.setVerified(user.isVerified());
+        dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
     }
+
+    // Use for updates
+    public void updateEntity(User user, UserDTO dto) {
+        if (dto.getUsername() != null) user.setUsername(dto.getUsername());
+        if (dto.getPhoneNumber() != null) user.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getProfileImage() != null) user.setProfileImage(dto.getProfileImage());
+        // DO NOT allow updates to email, password, role from here (for security)
+    }
+
 }

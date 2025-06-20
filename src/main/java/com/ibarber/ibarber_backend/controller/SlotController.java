@@ -81,5 +81,20 @@ public class SlotController {
         long totalBooked = slotService.countBookedSlots();
         return ResponseEntity.ok(totalBooked);
     }
+    @GetMapping("/bookings/count/{clientId}")
+    public ResponseEntity<Long> countBookings(@PathVariable Long clientId) {
+        Long count = slotService.countBookingsByClientId(clientId);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/last-visit/{clientId}")
+    public ResponseEntity<?> getLastVisit(@PathVariable Long clientId) {
+        Slot lastSlot = slotService.getLastSlotByClientId(clientId);
+        if (lastSlot != null) {
+            return ResponseEntity.ok(lastSlot.getDate());
+        } else {
+            return ResponseEntity.ok("No bookings found");
+        }
+    }
 
 }

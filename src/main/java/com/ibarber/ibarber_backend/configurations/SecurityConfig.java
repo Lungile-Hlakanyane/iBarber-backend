@@ -27,12 +27,19 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/api/support",
+                                "/api/support/**",
+                                "/api/slots/**",
+                                "/api/users/verify-users",
+                                "/api/users/request-reset",
+                                "/api/users/reset-password",
+                                "/api/auth/verify-otp-forgot-password",
+                                "/api/auth/**",
+                                "/api/auth/verify-otp",
                                 "/api/users/register",
-                                "/api/users/verify-otp",
                                 "/api/auth/login",
                                 "/api/auth/user",
                                 "/api/users/**",
-                                "/api/slots/**",
                                 "/api/slots/create",
                                 "/api/slots/unbooked/barber/**",
                                 "/api/slots/barber-id",

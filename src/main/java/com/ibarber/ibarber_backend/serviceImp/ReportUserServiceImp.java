@@ -7,7 +7,6 @@ import com.ibarber.ibarber_backend.mapper.ReportUserMapper;
 import com.ibarber.ibarber_backend.repository.ReportUserRepository;
 import com.ibarber.ibarber_backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,5 +91,10 @@ public class ReportUserServiceImp implements ReportUserService {
             warningDTOs.add(dto);
         }
         return warningDTOs;
+    }
+
+    @Override
+    public Long countWarningsByUserId(Long userId) {
+        return reportUserRepository.countByReportedUserIdAndStatus(userId, "warned");
     }
 }

@@ -1,12 +1,9 @@
 package com.ibarber.ibarber_backend.entity;
-
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +15,24 @@ public class User {
     private String otp;
     private boolean verified = false;
     private boolean banned;
+    private String phoneNumber;
+    @Column(name = "profile_image")
+    private String profileImage;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
     private boolean active = true;
     public boolean isActive() {
         return active;

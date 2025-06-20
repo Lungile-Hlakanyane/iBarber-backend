@@ -10,4 +10,5 @@ public interface ReportUserService {
     void banUser(Long reportId);
     void dismissReport(Long reportId);
     List<ReportUserDTO> getWarningsByUserId(Long userId);
+    Long countWarningsByUserId(Long userId);
 }

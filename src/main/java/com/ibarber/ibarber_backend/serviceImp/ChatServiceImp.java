@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,14 +23,32 @@ public class ChatServiceImp implements ChatService {
         message.setTimestamp(LocalDateTime.now());
         ChatMessage saved = chatMessageRepository.save(message);
         dto.setTimestamp(saved.getTimestamp());
+        dto.setId(saved.getId());
         return dto;
     }
     @Override
     public List<ChatMessageDTO> getChatHistory(Long user1Id, Long user2Id) {
         List<ChatMessage> messages = chatMessageRepository
                 .findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(user1Id, user2Id, user1Id, user2Id);
-        return messages.stream().map(msg -> new ChatMessageDTO(
-                msg.getSenderId(), msg.getReceiverId(), msg.getContent(), msg.getTimestamp()
-        )).collect(Collectors.toList());
+        return messages.stream().map(msg -> {
+            ChatMessageDTO dto = new ChatMessageDTO();
+            dto.setId(msg.getId());
+            dto.setSenderId(msg.getSenderId());
+            dto.setReceiverId(msg.getReceiverId());
+            dto.setContent(msg.getContent());
+            dto.setTimestamp(msg.getTimestamp());
+            return dto;
+        }).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public boolean deleteMessage(Long id) {
+        Optional<ChatMessage> message = chatMessageRepository.findById(id);
+        if (message.isPresent()) {
+            chatMessageRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

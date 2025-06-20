@@ -11,6 +11,8 @@ public interface UserService {
     public List<UserDTO> getAllUsers();
     boolean deleteUserById(Long id);
     List<UserDTO> getAllBarbers();
-
     long countUsers();
+    String sendResetLink(String email);
+    String resetPassword(String token, String newPassword);
+    UserDTO updateUser(Long id, UserDTO updatedUserDTO);
 }

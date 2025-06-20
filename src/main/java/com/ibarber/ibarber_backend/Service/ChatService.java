@@ -5,5 +5,5 @@ import java.util.List;
 public interface ChatService {
     ChatMessageDTO sendMessage(ChatMessageDTO dto);
     List<ChatMessageDTO> getChatHistory(Long user1Id, Long user2Id);
-
+    boolean deleteMessage(Long id);
 }

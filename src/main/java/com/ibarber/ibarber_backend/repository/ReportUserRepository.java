@@ -7,4 +7,5 @@ import java.util.List;
 @Repository
 public interface ReportUserRepository extends JpaRepository<ReportUser, Long> {
     List<ReportUser> findByReportedUserIdAndStatus(Long reportedUserId, String status);
+    Long countByReportedUserIdAndStatus(Long userId, String status);
 }

@@ -2,6 +2,7 @@ package com.ibarber.ibarber_backend.dto;
 import java.time.LocalDateTime;
 
 public class ChatMessageDTO {
+    private Long id;
     private Long senderId;
     private Long receiverId;
     private String content;
@@ -15,6 +16,14 @@ public class ChatMessageDTO {
         this.receiverId = receiverId;
         this.content = content;
         this.timestamp = timestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getSenderId() {

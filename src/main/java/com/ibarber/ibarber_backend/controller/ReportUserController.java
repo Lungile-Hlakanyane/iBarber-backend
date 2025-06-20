@@ -47,5 +47,10 @@ public class ReportUserController {
         List<ReportUserDTO> warnings = reportUserService.getWarningsByUserId(userId);
         return ResponseEntity.ok(warnings);
     }
+    @GetMapping("/warnings/count/{userId}")
+    public ResponseEntity<Long> countWarnings(@PathVariable Long userId) {
+        Long count = reportUserService.countWarningsByUserId(userId);
+        return ResponseEntity.ok(count);
+    }
 
 }

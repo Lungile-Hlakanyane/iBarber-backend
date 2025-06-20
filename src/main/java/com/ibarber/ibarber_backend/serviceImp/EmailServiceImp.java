@@ -17,4 +17,12 @@ public class EmailServiceImp implements EmailService {
         msg.setText(body);
         mailSender.send(msg);
     }
+
+    public void sendOtpEmail(String toEmail, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Your iBarber Password Reset Code");
+        message.setText("Your OTP code to reset your iBarber password is: " + otp);
+        mailSender.send(message);
+    }
 }
