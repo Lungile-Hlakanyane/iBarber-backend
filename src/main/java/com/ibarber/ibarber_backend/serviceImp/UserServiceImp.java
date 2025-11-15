@@ -36,20 +36,6 @@ public class UserServiceImp implements UserService {
     private EmailService emailService;
 
     //for sending OTP emails
-    @Override
-    public String registerUser(UserDTO userDTO) {
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            return "Email already registered!";
-        }
-        String otp = String.format("%06d", new Random().nextInt(999999));
-        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
-        User user = userMapper.toEntity(userDTO, encodedPassword, otp);
-        userRepository.save(user);
-        emailService.sendEmail(userDTO.getEmail(), "Your iBarber OTP Code", "Your OTP is: " + otp);
-        return "Registration successful. OTP sent to email.";
-    }
-
-    //without sending the OTP email
 //    @Override
 //    public String registerUser(UserDTO userDTO) {
 //        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
@@ -59,8 +45,22 @@ public class UserServiceImp implements UserService {
 //        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
 //        User user = userMapper.toEntity(userDTO, encodedPassword, otp);
 //        userRepository.save(user);
-//        return "Registration successful.";
+//        emailService.sendEmail(userDTO.getEmail(), "Your iBarber OTP Code", "Your OTP is: " + otp);
+//        return "Registration successful. OTP sent to email.";
 //    }
+
+    //without sending the OTP email
+    @Override
+    public String registerUser(UserDTO userDTO) {
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+            return "Email already registered!";
+        }
+        String otp = String.format("%06d", new Random().nextInt(999999));
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        User user = userMapper.toEntity(userDTO, encodedPassword, otp);
+        userRepository.save(user);
+        return "Registration successful.";
+    }
 
     @Override
     public String verifyOtp(OtpDTO otpDTO) {
