@@ -35,6 +35,21 @@ public class UserServiceImp implements UserService {
     @Autowired
     private EmailService emailService;
 
+    //for sending OTP emails
+//    @Override
+//    public String registerUser(UserDTO userDTO) {
+//        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+//            return "Email already registered!";
+//        }
+//        String otp = String.format("%06d", new Random().nextInt(999999));
+//        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+//        User user = userMapper.toEntity(userDTO, encodedPassword, otp);
+//        userRepository.save(user);
+//        emailService.sendEmail(userDTO.getEmail(), "Your iBarber OTP Code", "Your OTP is: " + otp);
+//        return "Registration successful. OTP sent to email.";
+//    }
+
+    //without sending the OTP email
     @Override
     public String registerUser(UserDTO userDTO) {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
@@ -44,8 +59,7 @@ public class UserServiceImp implements UserService {
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         User user = userMapper.toEntity(userDTO, encodedPassword, otp);
         userRepository.save(user);
-        emailService.sendEmail(userDTO.getEmail(), "Your iBarber OTP Code", "Your OTP is: " + otp);
-        return "Registration successful. OTP sent to email.";
+        return "Registration successful.";
     }
 
     @Override
@@ -128,11 +142,9 @@ public class UserServiceImp implements UserService {
         resetToken.setExpiryDate(LocalDateTime.now().plusMinutes(30));
 
         tokenRepository.save(resetToken);
-
         String resetLink = "http://localhost:8100/new-password?token=" + token;
         emailService.sendEmail(user.getEmail(), "Reset your password",
                 "Click here to reset your password: " + resetLink);
-
         return "Reset link sent";
     }
 
