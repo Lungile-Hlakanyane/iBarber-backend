@@ -27,6 +27,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/api/questions/** ",
+                                "/api/questions",
+                                "/api/ratings/**",
                                 "/api/support",
                                 "/api/support/**",
                                 "/api/slots/**",
@@ -60,7 +63,7 @@ public class SecurityConfig {
                                 "/api/portfolios/upload",
                                 "/uploads/**",
                                 "/portfolio-images",
-                                "/portfolio-images/**",
+                                "/portfolios-images/**",
                                 "/api/announcements",
                                 "/api/announcements/**",
                                 "/api/report-user",

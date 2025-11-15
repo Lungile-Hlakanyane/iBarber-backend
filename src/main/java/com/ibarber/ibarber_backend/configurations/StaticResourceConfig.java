@@ -6,11 +6,10 @@ import java.nio.file.Paths;
 
 @Configuration
 public class StaticResourceConfig implements WebMvcConfigurer {
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String absolutePath = Paths.get("uploads/portfolios-images").toFile().getAbsolutePath();
+        String uploadDir = Paths.get("C:/Users/lungi/Downloads/ibarber-backend/ibarber-backend/uploads/portfolio-images").toUri().toString();
         registry.addResourceHandler("/portfolios-images/**")
-                .addResourceLocations("file:" + absolutePath + "/");
+                .addResourceLocations(uploadDir); // Map URL path to local file path
     }
 }

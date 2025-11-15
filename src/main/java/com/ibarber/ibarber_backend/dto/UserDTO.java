@@ -1,6 +1,5 @@
 package com.ibarber.ibarber_backend.dto;
 
-
 public class UserDTO {
     private Long id;
     private String username;
@@ -9,9 +8,8 @@ public class UserDTO {
     private boolean banned;
     private boolean active = true;
     private String role;
-    private boolean verified = false;
+    private boolean verified = true;
     private String profileImage;
-
     private String phoneNumber;
 
     public String getPhoneNumber() {
@@ -42,7 +40,7 @@ public class UserDTO {
         this.active = active;
     }
     public boolean isVerified() {
-        return verified;
+        return true;
     }
 
     public boolean isBanned() {
@@ -54,7 +52,7 @@ public class UserDTO {
     }
 
     public void setVerified(boolean verified) {
-        this.verified = verified;
+        this.verified = true;
     }
     public String getUsername() {
         return username;

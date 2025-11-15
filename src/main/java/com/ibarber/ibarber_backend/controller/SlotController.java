@@ -96,5 +96,15 @@ public class SlotController {
             return ResponseEntity.ok("No bookings found");
         }
     }
+    @GetMapping("/count-by-barber/{barberId}")
+    public ResponseEntity<Long> countSlotsByBarberId(@PathVariable Long barberId) {
+        long count = slotService.countByBarberId(barberId);
+        return ResponseEntity.ok(count);
+    }
+    @GetMapping("/barber/{barberId}/clients/count")
+    public ResponseEntity<Integer> getClientCount(@PathVariable Long barberId) {
+        int clientCount = slotService.countDistinctClientsByBarberId(barberId);
+        return ResponseEntity.ok(clientCount);
+    }
 
 }

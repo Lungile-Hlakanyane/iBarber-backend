@@ -13,7 +13,7 @@ public class User {
     private String password;
     private String role;
     private String otp;
-    private boolean verified = false;
+    private boolean verified = true;
     private boolean banned;
     private String phoneNumber;
     @Column(name = "profile_image")
@@ -96,10 +96,10 @@ public class User {
     }
 
     public boolean isVerified() {
-        return verified;
+        return true;
     }
 
     public void setVerified(boolean verified) {
-        this.verified = verified;
+        this.verified = true;
     }
 }

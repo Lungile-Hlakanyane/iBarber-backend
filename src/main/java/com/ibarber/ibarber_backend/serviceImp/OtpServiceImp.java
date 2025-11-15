@@ -1,11 +1,9 @@
 package com.ibarber.ibarber_backend.serviceImp;
 import com.ibarber.ibarber_backend.Service.OtpService;
-import com.ibarber.ibarber_backend.dto.OtpDTO;
 import com.ibarber.ibarber_backend.entity.Otp;
 import com.ibarber.ibarber_backend.repository.OtpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 

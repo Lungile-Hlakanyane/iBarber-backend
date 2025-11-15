@@ -18,7 +18,9 @@ public interface SlotsRepository extends JpaRepository<Slot, Long> {
     Long countByClient_Id(Long clientId);
     @Query("SELECT s FROM Slot s WHERE s.client.id = :clientId ORDER BY s.date DESC LIMIT 1")
     Slot findLatestSlotByClientId(@Param("clientId") Long clientId);
-
     @Query("SELECT s FROM Slot s WHERE s.client.id = :clientId ORDER BY s.date DESC")
     List<Slot> findTopByClientIdOrderByDateDesc(Pageable pageable);
+    long countByBarberId(Long barberId);
+    @Query("SELECT COUNT(DISTINCT s.client.id) FROM Slot s WHERE s.barber.id = :barberId")
+    int countDistinctClientsByBarberId(@Param("barberId") Long barberId);
 }

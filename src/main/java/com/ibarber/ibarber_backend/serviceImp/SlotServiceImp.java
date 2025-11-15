@@ -108,4 +108,13 @@ public class SlotServiceImp implements SlotService {
     public Slot getLastSlotByClientId(Long clientId) {
         return slotRepository.findLatestSlotByClientId(clientId);
     }
+
+    @Override
+    public long countByBarberId(Long barberId) {
+        return slotRepository.countByBarberId(barberId);
+    }
+    @Override
+    public int countDistinctClientsByBarberId(Long barberId) {
+        return slotRepository.countDistinctClientsByBarberId(barberId);
+    }
 }

@@ -13,7 +13,7 @@ public class UserMapper {
         user.setRole(dto.getRole());
         user.setBanned(dto.isBanned());
         user.setOtp(otp);
-        user.setVerified(false);
+        user.setVerified(true);
         user.setPhoneNumber(dto.getPhoneNumber());
         return user;
     }
@@ -25,7 +25,7 @@ public class UserMapper {
         dto.setBanned(user.isBanned());
         dto.setUsername(user.getUsername());
         dto.setRole(user.getRole());
-        dto.setVerified(user.isVerified());
+        dto.setVerified(true);
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
     }
@@ -35,7 +35,5 @@ public class UserMapper {
         if (dto.getUsername() != null) user.setUsername(dto.getUsername());
         if (dto.getPhoneNumber() != null) user.setPhoneNumber(dto.getPhoneNumber());
         if (dto.getProfileImage() != null) user.setProfileImage(dto.getProfileImage());
-        // DO NOT allow updates to email, password, role from here (for security)
     }
-
 }
