@@ -35,7 +35,7 @@ public class UserServiceImp implements UserService {
     @Autowired
     private EmailService emailService;
 
-    //for sending OTP emails
+    //for sending OTP emails -- do not remove thie method
 //    @Override
 //    public String registerUser(UserDTO userDTO) {
 //        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {

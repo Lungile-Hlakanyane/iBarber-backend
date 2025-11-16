@@ -11,16 +11,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:uploads/");
     }
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/uploads/**")
-                .allowedOrigins("http://localhost:8100", "http://localhost:4200")
-                .allowedMethods("*")
-                .allowedHeaders("*");
-
-        registry.addMapping("/ws/**")
-                .allowedOrigins("http://localhost:8100", "http://localhost:4200")
-                .allowedMethods("*")
-                .allowedHeaders("*");
-    }
 }
