@@ -75,6 +75,8 @@ public class SecurityConfig {
                 "http://13.49.76.153:*",
                 "http://13.49.76.153:8080",
                 "https://13.49.76.153:*",
+                "http://16.171.33.44:*",
+                "https://16.171.33.44:*",
                 "https://*.duckdns.org",
                 "https://*.amazonaws.com"
         ));
