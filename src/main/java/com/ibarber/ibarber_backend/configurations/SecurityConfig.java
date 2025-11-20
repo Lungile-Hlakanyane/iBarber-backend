@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/api/users/**",
                                 "api/users/user",
                                 "/api/questions/**",
                                 "/api/ratings/**",
@@ -87,11 +88,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return (CorsConfigurationSource) source;
     }
-
-//    @Bean
-//    public HttpFirewall allowUrlEncodedNewlineHttpFirewall() {
-//        StrictHttpFirewall firewall = new StrictHttpFirewall();
-//        firewall.setAllowUrlEncodedNewline(true); // Allow %0A and %0D
-//        return firewall;
-//    }
 }
