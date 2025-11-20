@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,16 +24,15 @@ public class ImageStorageServiceImp implements ImageStorageService {
     }
     @Override
     public String storeImage(MultipartFile file) {
-        String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileExtension = getFileExtension(originalFilename);
-        String uniqueFilename = UUID.randomUUID().toString() + "." + fileExtension;
-
         try {
-            Path targetLocation = this.storageDirectory.resolve(uniqueFilename);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return "/uploads/" + uniqueFilename;
-        } catch (IOException ex) {
-            throw new RuntimeException("Could not store file " + uniqueFilename + ". Please try again!", ex);
+            String uploadDir = "/home/ec2-user/uploads/";
+            Files.createDirectories(Paths.get(uploadDir));
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + fileName);
+            Files.write(filePath, file.getBytes());
+            return "/uploads/" + fileName;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to store image: " + e.getMessage(), e);
         }
     }
     private String getFileExtension(String filename) {

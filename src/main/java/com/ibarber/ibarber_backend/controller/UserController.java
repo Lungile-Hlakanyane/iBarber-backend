@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -111,16 +110,17 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
             User user = optionalUser.get();
-            String uploadDir = "user-profile-images/";
-            String fileName = "user_" + userId + "_" + file.getOriginalFilename();
+            String uploadDir = "/home/ec2-user/uploads/";
+            Files.createDirectories(Paths.get(uploadDir));
+            String fileName = "user_" + userId + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
             Path filePath = Paths.get(uploadDir + fileName);
-            Files.createDirectories(filePath.getParent());
             Files.write(filePath, file.getBytes());
             user.setProfileImage(fileName);
             userRepository.save(user);
             return ResponseEntity.ok("Profile image uploaded successfully.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Upload failed: " + e.getMessage());
         }
     }
 

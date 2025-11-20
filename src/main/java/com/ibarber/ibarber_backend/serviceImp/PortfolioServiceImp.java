@@ -7,9 +7,11 @@ import com.ibarber.ibarber_backend.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +32,25 @@ public class PortfolioServiceImp implements PortfolioService {
     @Override
     public PortfolioDTO createPortfolio(Long userId, List<MultipartFile> images) {
         List<String> imageUrls = new ArrayList<>();
-        for (MultipartFile image : images) {
-            String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            File file = new File(UPLOAD_DIR + filename);
-            file.getParentFile().mkdirs();
-            try {
-                image.transferTo(file);
-                imageUrls.add("/" + UPLOAD_DIR + filename);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store image", e);
+        String uploadDir = "/home/ec2-user/uploads/";
+        try {
+            Files.createDirectories(Paths.get(uploadDir));
+            for (MultipartFile image : images) {
+                String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir + filename);
+                Files.write(filePath, image.getBytes());
+                imageUrls.add("/uploads/" + filename);
             }
+            Portfolio portfolio = new Portfolio();
+            portfolio.setUserId(userId);
+            portfolio.setImageUrls(imageUrls);
+            portfolio.setCreatedAt(LocalDateTime.now());
+            return mapper.toDTO(portfolioRepository.save(portfolio));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store portfolio images: " + e.getMessage(), e);
         }
-        Portfolio portfolio = new Portfolio();
-        portfolio.setUserId(userId);
-        portfolio.setImageUrls(imageUrls);
-        portfolio.setCreatedAt(LocalDateTime.now());
-        return mapper.toDTO(portfolioRepository.save(portfolio));
     }
+
 
     @Override
     public List<PortfolioDTO> getPortfoliosByUserId(Long userId) {
