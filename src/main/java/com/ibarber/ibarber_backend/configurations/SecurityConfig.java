@@ -69,6 +69,7 @@ public class SecurityConfig {
         // Allow both local development & deployed URLs
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:8100",
+                "https://localhost",
                 "http://localhost:4200",
                 "http://13.49.76.153:*",
                 "http://13.49.76.153:8080",
