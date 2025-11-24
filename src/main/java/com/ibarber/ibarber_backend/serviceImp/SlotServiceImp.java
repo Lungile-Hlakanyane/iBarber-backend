@@ -117,4 +117,14 @@ public class SlotServiceImp implements SlotService {
     public int countDistinctClientsByBarberId(Long barberId) {
         return slotRepository.countDistinctClientsByBarberId(barberId);
     }
+
+    @Override
+    public Slot cancelSlot(Long slotId) {
+        Slot slot = slotRepository.findById(slotId)
+                .orElseThrow(() -> new RuntimeException("Slot not found"));
+        slot.setBooked(false);
+        slot.setClient(null);
+        slot.setApproveAppointment(false);
+        return slotRepository.save(slot);
+    }
 }

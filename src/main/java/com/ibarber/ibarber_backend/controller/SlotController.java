@@ -107,4 +107,13 @@ public class SlotController {
         return ResponseEntity.ok(clientCount);
     }
 
+    @PutMapping("/cancel/{slotId}")
+    public ResponseEntity<Slot> cancelSlot(@PathVariable Long slotId) {
+        try {
+            Slot cancelledSlot = slotService.cancelSlot(slotId);
+            return ResponseEntity.ok(cancelledSlot);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

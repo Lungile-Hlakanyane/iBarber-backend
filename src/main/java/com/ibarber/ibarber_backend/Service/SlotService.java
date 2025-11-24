@@ -17,4 +17,5 @@ public interface SlotService {
     Slot getLastSlotByClientId(Long clientId);
     long countByBarberId(Long barberId);
     int countDistinctClientsByBarberId(Long barberId);
+    Slot cancelSlot(Long slotId);
 }
