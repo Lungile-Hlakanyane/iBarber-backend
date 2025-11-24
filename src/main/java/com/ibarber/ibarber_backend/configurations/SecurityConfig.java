@@ -79,7 +79,8 @@ public class SecurityConfig {
                 "https://*.duckdns.org",
                 "https://*.amazonaws.com",
                 "capacitor://localhost",
-                "ionic://localhost"
+                "ionic://localhost",
+                "*"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
